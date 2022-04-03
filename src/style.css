@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+body {
+  background: #000;
+  --gap-size: 6px;
+  --tile-size: 52px;
+  color: white;
+}
+
+/* ******************************** */
+/* Header */
+
+.header {
+  display: flex;
+
+  align-items: center;
+  width: 100%;
+  height: 4em;
+
+  border-bottom: 1px solid #333;
+  /* padding: 5px 0; */
+  margin-bottom: 25pt;
+}
+
+.header h1 {
+  font-family: 'Secular One', serif;
+  text-transform: capitalize;
+  font-size: 30px;
+
+  margin-left: 50%;
+  transform: translateX(-50%);
+  font-weight: 400;
+}
+
+.restart-icon {
+  font-size: large;
+  cursor: pointer;
+  margin-left: -8%;
+}
+
+/******************************/
+/* Board */
+
+* {
+  font-family: Roboto, sans-serif;
+  user-select: none;
+}
+
+@keyframes pulse {
+  10% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+    border-color: #333;
+  }
+}
+
+@keyframes flipX {
+  0% {
+    transform: rotateX(0);
+  }
+  100% {
+    transform: rotateX(180deg);
+    border: none;
+  }
+}
+
+@keyframes flipXrev {
+  0% {
+    transform: rotateX(0);
+  }
+  100% {
+    transform: rotateX(-180deg);
+    border: solid 2px #444;
+    background-color: #444;
+  }
+}
+
+.char-block {
+  display: inline-block;
+  /* box-sizing: border-box; */
+
+  /* size */
+  height: var(--tile-size);
+  width: var(--tile-size);
+
+  /* center  */
+  text-align: center;
+
+  border: solid 2px #444;
+  /* padding: 0; */
+
+  position: relative;
+
+  /* font */
+  font-size: 20pt;
+  font-weight: bold;
+  color: white;
+}
+
+.letter {
+  display: inline-block;
+  box-sizing: border-box;
+
+  /* size */
+  height: var(--tile-size);
+  width: var(--tile-size);
+
+  /* center */
+  text-align: center;
+  line-height: var(--tile-size);
+
+  border: solid 2px #444;
+  padding: 0;
+
+  position: relative;
+
+  font-size: 20pt;
+  color: white;
+
+  transition-duration: 600ms;
+  transform-style: preserve-3D;
+}
+
+.letter div {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.letter .front {
+  background-color: #000;
+}
+.letter .back {
+  transform: rotateX(180deg);
+}
+
+.letter[animationData='flip'] {
+  animation: flipX 250ms linear forwards;
+}
+
+.letter[animationData='flipBack'] {
+  animation-name: flipXrev;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+.letter[animationData='pulse'] {
+  animation-name: pulse;
+  animation-duration: 200ms;
+  animation-fill-mode: forwards;
+}
+.container {
+  margin: 0;
+  padding: 0;
+  height: var(--tile-size);
+}
+
+.attempt {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: var(--gap-size);
+}
+
+.board {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: var(--gap-size);
+  justify-content: center;
+}
+
+/*message*/
+
+@keyframes fade-in-out {
+  0% {
+    filter: opacity(0);
+  }
+  15% {
+    filter: opacity(1);
+  }
+  85% {
+    filter: opacity(1);
+  }
+  100% {
+    filter: opacity(0);
+  }
+}
+
+.messages {
+  display: flex;
+  overflow: visible;
+  flex-direction: column;
+  position: fixed;
+  z-index: 10;
+
+  width: 100%;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.on-top-message {
+  display: block;
+  margin-bottom: 4px;
+  padding: 20px;
+  filter: opacity(0);
+
+  border-radius: 5px;
+  background: #999;
+  color: #000;
+
+  width: fit-content;
+  animation-name: fade-in-out;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  /* animation-delay: 2s; */
+}
+
+/* **************************************************************** */
+/* Keyboard */
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 5px;
+}
+
+.kb-btn {
+  color: white;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 40px;
+  height: 60px;
+
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  margin-right: 4px;
+
+  cursor: pointer;
+}
+.kb-btn:active {
+  filter: brightness(0.8);
+  transition-duration: 0.2s;
+}
+
+.enter-btn,
+.bs-btn {
+  width: 60px;
+  font-size: 13pt;
+}
+
+@media (max-width: 502px) {
+  .kb-btn {
+    width: 32px;
+    height: 60px;
+  }
+  .enter-btn,
+  .bs-btn {
+    width: 50px;
+  }
+  .header {
+    font-size: small;
+  }
+}
+
+.keyboard {
+  width: fit-content;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+}
