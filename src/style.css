@@ -36,7 +36,7 @@ body {
 .restart-icon {
   font-size: large;
   cursor: pointer;
-  margin-left: -8%;
+  margin-left: none;
 }
 
 /******************************/
@@ -270,8 +270,8 @@ body {
   .bs-btn {
     width: 50px;
   }
-  .header {
-    font-size: small;
+  .restart-icon {
+    margin-left: -8%;
   }
 }
 
