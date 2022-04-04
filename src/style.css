@@ -8,7 +8,6 @@ body {
   color: white;
 }
 
-/* ******************************** */
 /* Header */
 
 .header {
@@ -39,7 +38,6 @@ body {
   margin-left: none;
 }
 
-/******************************/
 /* Board */
 
 * {
@@ -83,7 +81,6 @@ body {
 
 .char-block {
   display: inline-block;
-  /* box-sizing: border-box; */
 
   /* size */
   height: var(--tile-size);
@@ -93,7 +90,6 @@ body {
   text-align: center;
 
   border: solid 2px #444;
-  /* padding: 0; */
 
   position: relative;
 
@@ -173,6 +169,7 @@ body {
 .board {
   display: grid;
   grid-template-rows: repeat(6, 1fr);
+  margin-top: 5vmin;
   gap: var(--gap-size);
   justify-content: center;
 }
@@ -221,10 +218,8 @@ body {
   animation-name: fade-in-out;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  /* animation-delay: 2s; */
 }
 
-/* **************************************************************** */
 /* Keyboard */
 
 .keyboard-row {
@@ -264,7 +259,7 @@ body {
 @media (max-width: 502px) {
   .kb-btn {
     width: 32px;
-    height: 60px;
+    height: 15vmin;
   }
   .enter-btn,
   .bs-btn {

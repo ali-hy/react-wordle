@@ -33,7 +33,6 @@ class Attempt extends React.Component {
     for (let i = 0; i < word.length; i++) {
       if (word[i] == attempt[i]) {
         word[i] = '';
-        // this.props.changeKeyColor(attempt[i], colors.green);
         attempt[i] = colors.green; //green
       }
     }
@@ -41,10 +40,8 @@ class Attempt extends React.Component {
     for (let i = 0; i < attempt.length; i++) {
       if (word.includes(attempt[i])) {
         word[word.indexOf(attempt[i])] = '';
-        // this.props.changeKeyColor(attempt[i], colors.yellow);
         attempt[i] = colors.yellow; //yellow
       } else if (attempt[i].length <= 1) {
-        // this.props.changeKeyColor(attempt[i], colors.grey);
         attempt[i] = colors.grey; //grey
       }
     }
