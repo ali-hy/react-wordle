@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 import { all_words, words } from './words';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRotate, faArrowTurnDown, faDeleteLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  faRotate,
+  faArrowTurnDown,
+  faDeleteLeft,
+} from '@fortawesome/free-solid-svg-icons';
 
 import colors from './colors';
 
@@ -49,10 +53,10 @@ class Attempt extends React.Component {
     return attempt;
   }
 
-  checkWin(tileColors){
+  checkWin(tileColors) {
     let win = true;
-    for(let i = 0; i < tileColors.length; i++)
-      if(tileColors[i] != colors.green) win = false;
+    for (let i = 0; i < tileColors.length; i++)
+      if (tileColors[i] != colors.green) win = false;
     if (win) this.props.win();
   }
 
@@ -68,7 +72,15 @@ class Attempt extends React.Component {
           letter={char}
           pos={i}
           bgcolor={tileColors[i]}
-          animationdata={this.props.restarting ? 'flipBack' : (flip ? 'flip' : (char != '' ? 'pulse' : ''))}
+          animationdata={
+            this.props.restarting
+              ? 'flipBack'
+              : flip
+              ? 'flip'
+              : char != ''
+              ? 'pulse'
+              : ''
+          }
           animationEnd={() => {
             this.props.changeKeyColor(attempt, tileColors);
             this.checkWin(tileColors);
@@ -84,13 +96,13 @@ class Attempt extends React.Component {
 }
 
 function LetterBlock(props) {
-  const delay = ((props.animationdata == 'flip') ? props.flipDelay : '0s');
+  const delay = props.animationdata == 'flip' ? props.flipDelay : '0s';
   const card = (
     <div
       className="letter"
       animationData={props.animationdata}
       style={{
-        animationDelay:delay,
+        animationDelay: delay,
       }}
       letter={props.letter}
       onAnimationEnd={() => {
@@ -137,7 +149,12 @@ class Keyboard extends React.Component {
             <div className={'keyboard-row ' + `row${i}`}>
               {i == 2 ? (
                 <KbKey
-                  label={<FontAwesomeIcon icon={faArrowTurnDown} className="fa-rotate-90"/>}
+                  label={
+                    <FontAwesomeIcon
+                      icon={faArrowTurnDown}
+                      className="fa-rotate-90"
+                    />
+                  }
                   onClick={() => this.props.onEnter()}
                   class="kb-btn  enter-btn"
                   keyColor={colors.light_grey}
@@ -198,8 +215,9 @@ class Wordle extends React.Component {
         words.includes(current_attepmt) ||
         all_words.includes(current_attepmt)
       ) {
-        const s = {...this.state};
-        s.current++; s.pos=0;
+        const s = { ...this.state };
+        s.current++;
+        s.pos = 0;
         this.setState({ current: this.state.current + 1, pos: 0 });
         localStorage.setItem('gameState', JSON.stringify(s));
       } else {
@@ -222,17 +240,20 @@ class Wordle extends React.Component {
 
     const savedData = JSON.parse(localStorage.getItem('gameState'));
 
-    this.state = savedData != null ? savedData : {
-      word: word,
-      attempts: Array(6).fill(Array(5).fill('')),
-      current: 0,
-      pos: 0,
-      messages: [],
-      won: false,
-      animations: {'animations': false},
+    this.state =
+      savedData != null
+        ? savedData
+        : {
+            word: word,
+            attempts: Array(6).fill(Array(5).fill('')),
+            current: 0,
+            pos: 0,
+            messages: [],
+            won: false,
+            animations: { animations: false },
 
-      keyColors: keyColors,
-    };
+            keyColors: keyColors,
+          };
   }
 
   addLetter(char) {
@@ -299,13 +320,13 @@ class Wordle extends React.Component {
     document.removeEventListener('keydown', this.handlekeydown);
   }
 
-  win(){
+  win() {
     this.setState({
       won: true,
-    })
+    });
   }
 
-  restart(){
+  restart() {
     let word = words[Math.floor(Math.random() * words.length)];
 
     const kb = keyboard.join(''); //'qwertyuiopasdfghjklzxcvbnm'
@@ -314,23 +335,23 @@ class Wordle extends React.Component {
       keyColors[kb[i]] = colors.light_grey;
     }
 
-    this.setState({restarting: true})
+    this.setState({ restarting: true });
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setState({
         attempts: Array(6).fill(Array(5).fill('')),
-      })
-    }, 400)
-    setTimeout(()=>{
+      });
+    }, 400);
+    setTimeout(() => {
       this.setState({
         word: word,
         pos: 0,
         keyColors: keyColors,
-        restarting: false, 
+        restarting: false,
         won: false,
         current: 0,
-      })
-    }, 1000)
+      });
+    }, 1000);
   }
 
   render() {
@@ -342,42 +363,59 @@ class Wordle extends React.Component {
           className="attempt"
           chars={attempt}
           done={i < this.state.current}
-          restarting={i<this.state.current?this.state.restarting:false}
+          restarting={i < this.state.current ? this.state.restarting : false}
           word={this.state.word}
-          win={()=>this.win()}
-          checkLose={()=>{if(!this.state.won && i == 5){this.push_message(this.state.word, 5)}}}
+          win={() => this.win()}
+          checkLose={() => {
+            if (!this.state.won && i == 5) {
+              this.push_message(this.state.word, 5);
+            }
+          }}
           changeKeyColor={(letter, color) => this.changeKeyColor(letter, color)}
         />
       );
     });
     return (
-      <div>
-        <div className="header">
-          <h1>wordle</h1>
-          <FontAwesomeIcon icon={faRotate} className={`restart-icon ${this.state.restarting?'fa-spin':null}`} style={{'--fa-animation-duration': '0.5s', '--fa-animation-timing-function':'cubic-bezier(1,.02,0,1)', '--fa-animation-iteration-count':2}} onClick={()=>this.restart()} />
-        </div>
+      <>
         <div className="messages">
-          {this.state.messages.map((message, i) => (
-                message ? <div
+            {this.state.messages.map((message, i) =>
+              message ? (
+                <div
                   className="on-top-message"
                   style={{ animationDuration: `${message_length}ms` }}
                 >
                   {message}
-                </div> : null
-              ))
+                </div>
+              ) : null
+            )}
+          </div>
+        <div className="app-container">
+          <div className="header">
+            <h1>wordle</h1>
+            <FontAwesomeIcon
+              icon={faRotate}
+              className={`restart-icon ${
+                this.state.restarting ? 'fa-spin' : null
+              }`}
+              style={{
+                '--fa-animation-duration': '0.5s',
+                '--fa-animation-timing-function': 'cubic-bezier(1,.02,0,1)',
+                '--fa-animation-iteration-count': 2,
+              }}
+              onClick={() => this.restart()}
+            />
+          </div>
+          <div className="board">{blocks}</div>
+          <Keyboard
+            onClick={this.handlekeydown}
+            onEnter={() => this.handlekeydown({ code: 'Enter', key: 'Enter' })}
+            onBackspace={() =>
+              this.handlekeydown({ code: 'backspace', key: 'backspace' })
             }
-        </div>
-        <div className="board">{blocks}</div>
-
-        <Keyboard
-          onClick={this.handlekeydown}
-          onEnter={() => this.handlekeydown({ code: 'Enter', key: 'Enter' })}
-          onBackspace={() =>
-            this.handlekeydown({ code: 'backspace', key: 'backspace' })
-          }
-          keyColors={this.state.keyColors}
-        />
+            keyColors={this.state.keyColors}
+          />
       </div>
+      </>
     );
   }
 }
