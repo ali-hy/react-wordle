@@ -5,7 +5,9 @@ body {
   background: #000;
   position: relative;
 
-  height: 100vh;
+  height: 85vh;
+  /* height: calc(var(--vh) * 85); */
+  margin: 0;
 
   --gap-size: 6px;
   --tile-size: 52px;
@@ -279,7 +281,7 @@ body {
 .keyboard {
   display: flex;
   flex-direction: column;
-  height: 30%;
+  height: 26%;
   /* margin-bottom: 20px; */
 }
 
