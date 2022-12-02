@@ -1,20 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
 
+:root {
+  --app-bg-dark: #111111;
+
+  --card-green-dark: #538c4f;
+  --card-yellow-dark: #b59e3a;
+  --card-grey-dark: #333;
+
+  --grid-gap-size: 6px;
+  --component-gap-size: 10px;
+
+  --key-height: 50px;
+  --attempt-height: 52px;
+}
+
 body {
-  background: #000;
+  background: var(--app-bg-dark);
   position: relative;
 
-  height: 85vh;
-  /* height: calc(var(--vh) * 85); */
   margin: 0;
 
-  --gap-size: 6px;
-  --tile-size: 52px;
   color: white;
 }
 #root {
   height: 100% !important;
+}
+
+.app {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 100%;
+  width: 100%;
+  gap: var(--component-gap-size);
 }
 
 /* Header */
@@ -81,8 +108,8 @@ body {
   }
   100% {
     transform: rotateX(-180deg);
-    border: solid 2px #444;
-    background-color: #444;
+    border: solid 2px var(--card-grey-dark);
+    background-color: var(--card-grey-dark);
   }
 }
 
@@ -96,13 +123,13 @@ body {
   /* center  */
   text-align: center;
 
-  border: solid 2px #444;
+  border: solid 2px var(--card-grey-dark);
 
   position: relative;
 
   /* font */
   font-size: 20pt;
-  font-weight: bold;
+  font-weight: 700;
   color: white;
 }
 
@@ -111,19 +138,19 @@ body {
   box-sizing: border-box;
 
   /* size */
-  height: 100%;
+  width: 100%;
   aspect-ratio: 1;
 
   /* center */
   text-align: center;
-  line-height: var(--tile-size);
 
-  border: solid 2px #444;
+  border: solid 3px var(--card-grey-dark);
   padding: 0;
 
   position: relative;
 
   font-size: 20pt;
+  font-weight: 700;
   color: white;
 
   transition-duration: 600ms;
@@ -136,10 +163,14 @@ body {
   width: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .letter .front {
-  background-color: #000;
+  background-color: transparent;
 }
 .letter .back {
   transform: rotateX(180deg);
@@ -164,12 +195,16 @@ body {
 .container {
   margin: 0;
   padding: 0;
-  height: var(--tile-size);
+  width: 100%;
+  aspect-ratio: 1;
+  overflow-y: hidden;
 }
 
 .attempt {
   display: flex;
-  gap: var(--gap-size);
+  gap: var(--grid-gap-size);
+  width: 100%;
+  max-width: 300px;
 }
 
 .board {
@@ -177,9 +212,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* margin-top: 5vmin;
-  margin-bottom: 5vmin; */
-  gap: var(--gap-size);
+
+  gap: var(--grid-gap-size);
 }
 
 /*message*/
@@ -229,12 +263,19 @@ body {
 }
 
 /* Keyboard */
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
 
 .keyboard-row {
   display: flex;
   justify-content: center;
-  margin: 0 auto 5px;
+  margin: 0 7px 5px;
   height: 100%;
+  gap: 4px;
 }
 
 .kb-btn {
@@ -244,13 +285,16 @@ body {
   justify-content: center;
   align-items: center;
 
-  width: 40px;
-  height: auto;
+  /* width: 40px; */
+  width: 100%;
+  height: var(--key-height);
+
+  flex: 1;
+  font-weight: bold;
 
   text-align: center;
   text-transform: uppercase;
   border: none;
-  margin-right: 4px;
 
   cursor: pointer;
 }
@@ -258,31 +302,22 @@ body {
   filter: brightness(0.8);
   transition-duration: 0.2s;
 }
+.kb-btn:disabled {
+  background-color: transparent !important;
+  cursor: default;
+  flex: 0.5;
+}
 
 .enter-btn,
 .bs-btn {
-  width: 60px;
+  flex-grow: 2;
   font-size: 13pt;
 }
 
 @media (max-width: 502px) {
-  .kb-btn {
-    width: 32px;
-  }
-  .enter-btn,
-  .bs-btn {
-    width: 50px;
-  }
   .restart-icon {
     margin-left: -8%;
   }
-}
-
-.keyboard {
-  display: flex;
-  flex-direction: column;
-  height: 26%;
-  /* margin-bottom: 20px; */
 }
 
 .app-container {
@@ -290,4 +325,12 @@ body {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+}
+.game-container {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: var(--component-gap-size);
+
+  width: 100%;
+  max-width: 500px;
 }

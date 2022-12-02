@@ -12,7 +12,7 @@ import colors from './colors';
 
 import './style.css';
 
-const keyboard = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
+const keyboard = ['qwertyuiop', '\0asdfghjkl\0', 'zxcvbnm'];
 
 const keyColors = new Map();
 const message_length = 1600;
@@ -121,9 +121,11 @@ function LetterBlock(props) {
 }
 
 function KbKey(props) {
+  const disabled = props.label === '\0';
   return (
     <button
-      className={'kb-btn ' + props.class}
+      className={`kb-btn ${props.class} ${disabled ? 'empty' : ''}`}
+      disabled = {disabled}
       style={{ backgroundColor: props.keyColor }}
       onMouseDown={(e) => e.preventDefault()}
       onClick={() => {
@@ -375,10 +377,14 @@ class Wordle extends React.Component {
         />
       );
     });
+
     return (
-      <>
+      <div className="app">
         <div className="messages">
-            {this.state.messages.map((message, i) =>
+          {this.state.messages
+            .reverse()
+            .slice(0, 2)
+            .map((message, i) =>
               message ? (
                 <div
                   className="on-top-message"
@@ -388,7 +394,7 @@ class Wordle extends React.Component {
                 </div>
               ) : null
             )}
-          </div>
+        </div>
         <div className="app-container">
           <div className="header">
             <h1>wordle</h1>
@@ -405,17 +411,21 @@ class Wordle extends React.Component {
               onClick={() => this.restart()}
             />
           </div>
-          <div className="board">{blocks}</div>
-          <Keyboard
-            onClick={this.handlekeydown}
-            onEnter={() => this.handlekeydown({ code: 'Enter', key: 'Enter' })}
-            onBackspace={() =>
-              this.handlekeydown({ code: 'backspace', key: 'backspace' })
-            }
-            keyColors={this.state.keyColors}
-          />
+          <div className="game-container">
+            <div className="board">{blocks}</div>
+            <Keyboard
+              onClick={this.handlekeydown}
+              onEnter={() =>
+                this.handlekeydown({ code: 'Enter', key: 'Enter' })
+              }
+              onBackspace={() =>
+                this.handlekeydown({ code: 'backspace', key: 'backspace' })
+              }
+              keyColors={this.state.keyColors}
+            />
+          </div>
+        </div>
       </div>
-      </>
     );
   }
 }
