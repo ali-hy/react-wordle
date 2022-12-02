@@ -125,7 +125,7 @@ function KbKey(props) {
   return (
     <button
       className={`kb-btn ${props.class} ${disabled ? 'empty' : ''}`}
-      disabled = {disabled}
+      disabled={disabled}
       style={{ backgroundColor: props.keyColor }}
       onMouseDown={(e) => e.preventDefault()}
       onClick={() => {
@@ -381,19 +381,16 @@ class Wordle extends React.Component {
     return (
       <div className="app">
         <div className="messages">
-          {this.state.messages
-            .reverse()
-            .slice(0, 2)
-            .map((message, i) =>
-              message ? (
-                <div
-                  className="on-top-message"
-                  style={{ animationDuration: `${message_length}ms` }}
-                >
-                  {message}
-                </div>
-              ) : null
-            )}
+          {this.state.messages.map((message, i) =>
+            message ? (
+              <div
+                className="on-top-message"
+                style={{ animationDuration: `${message_length}ms` }}
+              >
+                {message}
+              </div>
+            ) : null
+          )}
         </div>
         <div className="app-container">
           <div className="header">
