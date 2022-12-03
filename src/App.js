@@ -393,20 +393,24 @@ class Wordle extends React.Component {
           )}
         </div>
         <div className="app-container">
-          <div className="header">
-            <h1>wordle</h1>
-            <FontAwesomeIcon
-              icon={faRotate}
-              className={`restart-icon ${
-                this.state.restarting ? 'fa-spin' : null
-              }`}
-              style={{
-                '--fa-animation-duration': '0.5s',
-                '--fa-animation-timing-function': 'cubic-bezier(1,.02,0,1)',
-                '--fa-animation-iteration-count': 2,
-              }}
-              onClick={() => this.restart()}
-            />
+          <div className="header-container">
+            <div className="header">
+              <h1>wordle</h1>
+              <div className="restart-icon-container">
+                <FontAwesomeIcon
+                  icon={faRotate}
+                  className={`restart-icon ${
+                    this.state.restarting ? 'fa-spin' : null
+                  }`}
+                  style={{
+                    '--fa-animation-duration': '0.5s',
+                    '--fa-animation-timing-function': 'cubic-bezier(1,.02,0,1)',
+                    '--fa-animation-iteration-count': 2,
+                  }}
+                  onClick={() => this.restart()}
+                />
+              </div>
+            </div>
           </div>
           <div className="game-container">
             <div className="board">{blocks}</div>
