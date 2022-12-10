@@ -37,8 +37,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: space-between; */
-  
+  justify-content: space-between;
+
   height: 100%;
   width: 100%;
   gap: var(--component-gap-size);
@@ -47,6 +47,7 @@ body {
 .game-container {
   display: flex;
   flex-flow: column nowrap;
+  justify-content: space-between;
   gap: var(--component-gap-size);
 
   width: 100%;
@@ -339,7 +340,7 @@ body {
 
 @media (max-width: 502px) {
   .header {
-    padding: 0 15px;
+    padding: 7px 15px 2px;
     justify-content: space-between;
   }
   .header h1 {
