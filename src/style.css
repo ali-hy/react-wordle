@@ -217,7 +217,7 @@ body {
   padding: 0;
   width: 100%;
   aspect-ratio: 1;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .attempt {
